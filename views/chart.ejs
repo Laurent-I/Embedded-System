@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    canvas {
+      width: 80% !important;
+      height: auto !important;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="barChart"></canvas>
+  <script>
+
+    // Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: <%= JSON.stringify(patientData.map(data => data.id)) %>,
+        datasets: [{
+          label: 'Heart Rate',
+          data: <%= JSON.stringify(patientData.map(data => data.HeartRate)) %>,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        },{
+          label: 'Body Temperature',
+          data: <%= JSON.stringify(patientData.map(data => data.BodyTemperature)) %>,
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+        title: {
+          display: true,
+          text: 'Patient Data',
+          fontSize: 50
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    }
+    });
+  </script>
+</body>
+</html>
